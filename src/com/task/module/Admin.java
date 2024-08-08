@@ -39,7 +39,7 @@ public class Admin {
 			
 
 			String operation = stringInput.nextLine();
-              if(operation.equalsIgnoreCase("")||(operation.endsWith(" "))){
+              if(operation.equals("")||(operation.endsWith(" "))){
             	  continue;
               }
               else {
@@ -57,14 +57,17 @@ public class Admin {
 				}
 				System.out.println("Enter User Email : ");
 				String userEmail = stringInput.nextLine();
-				if (!Admin.checkValidEmail(userEmail)) {
+				if (!Admin.checkValidEmail(userEmail.trim())) {
 					System.err.println("Invalid Email Try again:");
 					break;
 				}
-				System.out.println("Enetr Number of Phone Number User Have : ");
-				int count = integerInput.nextInt();// Here is count of number
-				String phoneNum = "";
 				int flag = 0;
+				String phoneNum = "";
+				System.out.println("User can have number within 1 to 7 range : ");
+				int count = integerInput.nextInt();// Here is count of number
+				if(count<=7)
+				{
+					phoneNum = "";
 				for (int i = 0; i < count; i++) {
 					System.out.println("Enter User Phone Number : ");
 					String userPhone = stringInput.nextLine().trim();
@@ -76,6 +79,10 @@ public class Admin {
 						flag = 1;
 						break;
 					}
+				}
+				}else {
+					System.out.println("you Eneter the number outof Range");
+    				break;
 				}
 				boolean found = false;
 				if (flag == 0) {
@@ -194,9 +201,15 @@ public class Admin {
 								userProcess.setName(newUserName);
 								found = true;
 							}
+							if (!found) {
+								System.err.println("Record Not found");
+							} else {
+								System.out.println("Record is Updated");
+							}
 							}catch (Exception e) {
 								e.printStackTrace();
 							}
+							 
 							System.out.println("-------------------------------------------------------------");
 							break;
 						case 2:
@@ -205,16 +218,27 @@ public class Admin {
 							System.out.println("Enter new email ");
 							String newEmail = stringInput.nextLine();
 
-							if (Admin.checkValidEmail(newEmail)) {
+							if (Admin.checkValidEmail(newEmail.trim())) {
 								String newUserEmail=newEmail;
+								if(userProcess.getEmail().equalsIgnoreCase(newUserEmail)){
 								userProcess.setEmail(newUserEmail);
 								found = true;
+								}else {
+									System.err.println("User alerady have that Email Try again");
+									break;
+								}
 							} else {
 								System.err.println("Invalid Email Try again");
+							}
+							if (!found) {
+								System.err.println("Record Not found");
+							} else {
+								System.out.println("Record is Updated");
 							}
 							}catch (Exception e) {
 								e.printStackTrace();
 							}
+							 
 							System.out.println("-------------------------------------------------------------");
 							break;
 						case 3:
@@ -259,6 +283,11 @@ public class Admin {
 							}
 							userProcess.setPhone(addNewPhone);
 							found = true;
+							if (!found) {
+								System.err.println("Record Not found");
+							} else {
+								System.out.println("Record is Updated");
+							}
 							}
 							catch (Exception e) {
 								e.printStackTrace();
@@ -322,6 +351,11 @@ public class Admin {
 								System.err.println("Invalid Name");
 								break;
 							}
+							if (!found) {
+								System.err.println("Record Not found");
+							} else {
+								System.out.println("Record is Updated");
+							}
 							}
 							catch (Exception e) {
 								e.printStackTrace();
@@ -330,11 +364,7 @@ public class Admin {
 						}
 					}
 				}
-				if (!found) {
-					System.err.println("Record Not found");
-				} else {
-					System.out.println("Record is Updated");
-				}
+				 
 				System.out.println("-------------------------------------------------------------");
 				break;
 			 
