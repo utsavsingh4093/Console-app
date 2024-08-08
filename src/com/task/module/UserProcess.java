@@ -1,4 +1,4 @@
-package com.taskmodul1.project;
+package com.task.module;
 
 public class UserProcess {
 	private String name;

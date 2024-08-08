@@ -1,32 +1,29 @@
-package com.taskmodul1.project;
+package com.task.module;
 
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 public class Admin {
 	public static boolean checkNameValid(String name) {
-		String regexName = "[a-zA-Z]+[\\s]{0,1}[a-zA-Z]{0,50}";
+		String regexName = "[\\s]{0}[a-zA-Z]+[\\s]{0,1}[a-zA-Z]{0,50}[\\s]*";
 		boolean check = name.matches(regexName);
 		return check;
 	}
 
 	public static boolean checkValidEmail(String emai) {
-		String regxEmail = "[a-zA-Z0-9._%+-]+@[a-zA-z0-9.-]+\\.[a-zA-Z]{2,3}";
+		String regxEmail = "[\\s]{0}[a-zA-Z0-9._%+-]+@[a-zA-z0-9.-]+\\.[a-zA-Z]{2,3}[\\s]*";
 		boolean check = emai.matches(regxEmail);
 		return check;
 	}
 
 	public static boolean checkValidPhone(String number) {
-		String regxPhone = "[6-9][0-9]{9}";
+		String regxPhone = "[\\s]{0}[6-9][0-9]{9}[\\s]*";
 		boolean check = number.matches(regxPhone);
 		return check;
 	}
 
 	public static void main(String[] args) {
 		ArrayList<UserProcess> arrayList = new ArrayList<UserProcess>();
-		Scanner scr1 = new Scanner(System.in);// For Integer
-		Scanner scr2 = new Scanner(System.in);// For String
+		Scanner integerInput = new Scanner(System.in);// For Integer
+		Scanner stringInput = new Scanner(System.in);// For String
 
 		while (true) {
 			System.out.println("-------------------------------------------------------------");
@@ -41,32 +38,35 @@ public class Admin {
 			System.out.println("Tab Any Number for Operation Performing");
 			
 
-			String operation = scr2.nextLine().trim();
-
+			String operation = stringInput.nextLine();
+             if(operation.contains("\s") || operation.equalsIgnoreCase("")) {
+            	 continue;
+             }
+             else {
 			switch (operation) {
 			case "1":
 				System.out.println("-------------------------------------------------------------");
 				System.out.println("Enter User Name : ");
-				String userName = scr2.nextLine().trim();
+				String userName = stringInput.nextLine();
 				if (Admin.checkNameValid(userName)) {
 					System.out.print("");
 				} else if (!Admin.checkNameValid(userName)) {
-					System.out.println("You Enter Invalid Name");
+					System.err.println("You Name is Invalid");
 					break;
 				}
 				System.out.println("Enter User Email : ");
-				String userEmail = scr2.nextLine().trim();
+				String userEmail = stringInput.nextLine();
 				if (!Admin.checkValidEmail(userEmail)) {
 					System.err.println("Invalid Email Try again:");
 					break;
 				}
 				System.out.println("Enetr Number of Phone Number User Have : ");
-				int count = scr1.nextInt();// Here is count of number
+				int count = integerInput.nextInt();// Here is count of number
 				String phoneNum = "";
 				int flag = 0;
 				for (int i = 0; i < count; i++) {
 					System.out.println("Enter User Phone Number : ");
-					String userPhone = scr2.nextLine().trim();
+					String userPhone = stringInput.nextLine().trim();
 					if (Admin.checkValidPhone(userPhone)) {
 						phoneNum += userPhone + " ";
 						flag = 0;
@@ -85,7 +85,7 @@ public class Admin {
 						}
 					}
 					if (!found) {
-						arrayList.add(new UserProcess(userName, userEmail, phoneNum));
+						arrayList.add(new UserProcess(userName.trim(), userEmail.trim(), phoneNum.trim()));
 						System.out.println("User Added Successfully");
 					} else {
 						System.err.println("User is Alerady Exist with this Email create new Email");
@@ -95,9 +95,15 @@ public class Admin {
 				break;
 			case "2":
 				System.out.println("-------------------------------------------------------------");
+				if(arrayList.size()==0)
+				{
+					System.out.println("No User Avalilable Empty");
+				}
+				else {
 				for (UserProcess userProcess : arrayList) {
 					System.out.println(
 							userProcess.getName() + " : " + userProcess.getEmail() + " : " + userProcess.getPhone());
+				}
 				}
 				System.out.println("-------------------------------------------------------------");
 				break;
@@ -106,7 +112,7 @@ public class Admin {
 				try {
 					System.out.println("-------------------------------------------------------------");
 					System.out.println("Enter name For Search : ");
-					String name1 = scr2.nextLine().trim();
+					String name1 = stringInput.nextLine();
 					boolean found1 = false;
 					for (UserProcess userProcess : arrayList) {
 						if (userProcess.getName().equalsIgnoreCase(name1)) {
@@ -127,7 +133,7 @@ public class Admin {
 			case "4":
 				System.out.println("-------------------------------------------------------------");
 				System.out.println("Enter name you want to delete : ");
-				userName = scr2.nextLine().trim();
+				userName = stringInput.nextLine();
 				found = false;
 				ListIterator<UserProcess> listIterator = arrayList.listIterator();
 				while (listIterator.hasNext()) {
@@ -147,8 +153,12 @@ public class Admin {
 			case "5":
 				System.out.println("-------------------------------------------------------------");
 				System.out.println("Enter name you want to Update All Details : ");
-				userName = scr2.nextLine().trim();
+				userName = stringInput.nextLine();
 				listIterator = arrayList.listIterator();
+				for(UserProcess u:arrayList)
+				{
+					System.out.println(u);
+				}
 				found = false;
 				while (listIterator.hasNext()) {
 					UserProcess userProcess = listIterator.next();
@@ -159,13 +169,14 @@ public class Admin {
 						System.out.println("press 2 to Update Email ");
 						System.out.println("press 3 to Update Phone Number : ");
 						System.out.println("press 4 to Update All :");
-						int num = scr1.nextInt();// For Inner Switch Case Condition
+						int num = integerInput.nextInt();// For Inner Switch Case Condition
 						switch (num) {
 						case 1:
 							System.out.println("-------------------------------------------------------------");
 							System.out.println("Enter new name ");
-							String newUserName = scr2.nextLine().trim();
-							if (Admin.checkNameValid(newUserName)) {
+							String newName = stringInput.nextLine();
+							if (Admin.checkNameValid(newName)) {
+								String newUserName=newName.trim();
 								userProcess.setName(newUserName);
 								found = true;
 							}
@@ -174,9 +185,10 @@ public class Admin {
 						case 2:
 							System.out.println("-------------------------------------------------------------");
 							System.out.println("Enter new email ");
-							String newUserEmail = scr2.nextLine().trim();
+							String newEmail = stringInput.nextLine();
 
-							if (Admin.checkValidEmail(newUserEmail)) {
+							if (Admin.checkValidEmail(newEmail)) {
+								String newUserEmail=newEmail;
 								userProcess.setEmail(newUserEmail);
 								found = true;
 							} else {
@@ -187,7 +199,6 @@ public class Admin {
 						case 3:
 							System.out.println("-------------------------------------------------------------");
 							String demoNumber = userProcess.getPhone();
-							System.out.println("You have That Number in your List: " + demoNumber);
 							String stringArray[] = demoNumber.split(" ");// This array is For Containing the number in
 																			// it
 							String addNewPhone = "";// for Adding new Phone Number
@@ -198,15 +209,16 @@ public class Admin {
 							}
 
 							System.out.println("Enetr a how many number you want to update: ");
-							int numCount = scr1.nextInt();// For Number CountStoing
+							int numCount = integerInput.nextInt();// For Number CountStoing
+							if(numCount<=arrayListnew.size()) {
 							for (int k = 0; k < numCount; k++) {
 								System.out.println("Eneter a number you want to update : ");
-								String oldPhone = scr2.nextLine().trim();// User need to enter old phone number at here
+								String oldPhone = stringInput.nextLine();// User need to enter old phone number at here
 								if (Admin.checkValidPhone(oldPhone)) {
 									for (int i = 0; i < arrayListnew.size(); i++) {
 										if (arrayListnew.get(i).equals(oldPhone)) {
 											System.out.println("Eneter a New Phone Number : ");
-											String newPhoneNumber = scr2.nextLine().trim();
+											String newPhoneNumber = stringInput.nextLine().trim();
 											arrayListnew.set(i, newPhoneNumber);// Changing the number at particular
 																				// List Index Position
 										}
@@ -216,7 +228,11 @@ public class Admin {
 									System.err.println("Invalid Phone Number");
 								}
 							}
-							System.out.println(arrayListnew);
+							}
+							else {
+								System.err.println("You need to Enetr a number according to size if array your array size is : "+arrayListnew.size());
+							}
+//							System.out.println(arrayListnew);
 							for (int i = 0; i < arrayListnew.size(); i++) {
 								addNewPhone += arrayListnew.get(i) + " ";
 							}
@@ -227,52 +243,58 @@ public class Admin {
 						case 4:
 							System.out.println("-------------------------------------------------------------");
 							System.out.println("Enter New Name ");
-							newUserName = scr2.nextLine().trim();
-							if (Admin.checkNameValid(newUserName)) {
+							newName = stringInput.nextLine();
+							if (Admin.checkNameValid(newName)) {
+								String newUserName=newName.trim();
 								System.out.println("Enter New Email ");
-								newUserEmail = scr2.nextLine().trim();
+								newEmail = stringInput.nextLine();
 								System.out.println("For Phone Number ");
-								if (Admin.checkValidEmail(newUserEmail)) {
+								String newUserEamil="";
+								if (Admin.checkValidEmail(newEmail)) {
+									 newUserEamil=newEmail.trim();
 									demoNumber = userProcess.getPhone();
 									System.out.println("You have That Number in your List: " + demoNumber);
-									String stringArray1[] = demoNumber.split(" ");
+									String stringArrayy[] = demoNumber.split(" ");
 									addNewPhone = "";
 									ArrayList<String> ali1 = new ArrayList<>();
-									for (int i = 0; i < stringArray1.length; i++) {
-										ali1.add(stringArray1[i]);
+									for (int i = 0; i < stringArrayy.length; i++) {
+										ali1.add(stringArrayy[i]);
 									}
 
 									System.out.println("Enetr a how many number you want to update: ");
 
-									numCount = scr1.nextInt();
+									numCount = integerInput.nextInt();
 									for (int k = 0; k < numCount; k++) {
 										System.out.println("Eneter a number you want to update : ");
-										String oldPhone = scr2.nextLine().trim();
+										String oldPhone = stringInput.nextLine();
 										if (Admin.checkValidPhone(oldPhone)) {
 											for (int i = 0; i < ali1.size(); i++) {
 												if (ali1.get(i).equals(oldPhone)) {
 													System.out.println("Eneter a New Number : ");
-													String newPhoneNumber = scr2.nextLine().trim();
+													String newPhoneNumber = stringInput.nextLine();
 													ali1.set(i, newPhoneNumber);
 												}
 
 											}
 										} else {
 											System.err.println("Invalid Phone");
+											break;
 										}
 									}
 									System.out.println(ali1);
 									for (int i = 0; i < ali1.size(); i++) {
-										addNewPhone += ali1.get(i) + " ";
+										addNewPhone += ali1.get(i) + ",".trim();
 									}
-									listIterator.set(new UserProcess(newUserName, newUserEmail, addNewPhone));
+									listIterator.set(new UserProcess(newUserName, newUserEamil, addNewPhone));
 
 									found = true;
 								} else {
 									System.err.println("Invalid Email");
+									break;
 								}
 							} else {
 								System.err.println("Invalid Name");
+								break;
 							}
 
 							break;
@@ -305,5 +327,7 @@ public class Admin {
 
 			}
 		}
+		}
+		
 	}
 }
