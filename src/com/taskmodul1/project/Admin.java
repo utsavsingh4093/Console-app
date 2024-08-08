@@ -29,6 +29,7 @@ public class Admin {
 		Scanner scr2 = new Scanner(System.in);// For String
 
 		while (true) {
+			System.out.println("-------------------------------------------------------------");
 			System.out.println("Tab Number 1 For Create User");
 			System.out.println("Tab Number 2 For Fetch All User");
 			System.out.println("Tab Number 3 For Fetch any One User");
@@ -36,7 +37,9 @@ public class Admin {
 			System.out.println("Tab Number 5 For Update User");
 			System.out.println("Tab Number 6 For Delete All User");
 			System.out.println("Tab Number 7 For Exit");
+			System.out.println("-------------------------------------------------------------");
 			System.out.println("Tab Any Number for Operation Performing");
+			
 
 			String operation = scr2.nextLine();
 
@@ -291,12 +294,12 @@ public class Admin {
 				System.out.println("-------------------------------------------------------------");
 				break;
 			case "7":
-				System.out.println("---------------------------Program is End----------------------------------");
+				System.err.println("---------------------------Program is End----------------------------------");
 				System.exit(0);
 
 			default:
 				System.out.println("-----------------------------------------------------------------");
-				System.out.println("You Press Wrong Thing your program is out now again run it");
+				System.err.println("You Press Wrong Thing your program is out now again run it");
 				System.out.println("-----------------------------------------------------------------");
 				break;
 
