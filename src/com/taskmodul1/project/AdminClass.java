@@ -20,7 +20,8 @@ public  static  boolean validMobileNumber(String number){
       boolean b=number.matches(regx1);
    return b;
 }
-    public static void main(String[] args) {
+    
+	public static void main(String[] args) {
         ArrayList<UserProcess> l = new ArrayList<UserProcess>();
         Scanner s = new Scanner(System.in);//For Integer value
         Scanner s1 = new Scanner(System.in);//For String
@@ -110,11 +111,15 @@ public  static  boolean validMobileNumber(String number){
                             found1 = true;
                         }
                     }
+                    try {
                     if (!found1) {
                         throw new RuntimeException("UserNotFound Exception");
                     }
+                    }
+                    finally { 
                     System.out.println("-------------------------------------------------------------");
                     break;
+                    }
 
                 case "4":
                 	System.out.println("-------------------------------------------------------------");
