@@ -39,7 +39,10 @@ public class Admin {
 			
 
 			String operation = stringInput.nextLine();
-              
+              if(operation.equalsIgnoreCase("")||(operation.endsWith(" "))){
+            	  continue;
+              }
+              else {
 			switch (operation) {
 			case "1":
 				System.out.println("-------------------------------------------------------------");
@@ -355,6 +358,8 @@ public class Admin {
 				System.out.println("-----------------------------------------------------------------");
 				break;
 
+			}
+			 
 			}
 		}
 		}
