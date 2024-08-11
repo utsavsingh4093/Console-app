@@ -55,7 +55,7 @@ public class Admin {
 					}
 					System.out.println("-------------------------------------------------------------");
 					break;
-
+                         
 				case "3":
 					try {
 						System.out.println("-------------------------------------------------------------");
@@ -95,8 +95,15 @@ public class Admin {
 
 				case "5":
 					System.out.println("-------------------------------------------------------------");
+					String userName="";
+					try {
 					System.out.println("Enter name you want to Update All Details : ");
-					String userName = stringInput.nextLine();
+					 userName = stringInput.nextLine();
+					}
+					catch (Exception e) {
+						// TODO: handle exception
+						e.printStackTrace();
+					}
 					ListIterator<UserProcess> userIterator = userList.listIterator();
 					boolean found = false;
 					while (userIterator.hasNext()) {
@@ -133,7 +140,6 @@ public class Admin {
 							}
 						}
 						}
-					
 					System.out.println("-------------------------------------------------------------");
 					break;
 
@@ -156,13 +162,12 @@ public class Admin {
 					System.err.println("You Press Wrong Thing your program is out now again run it");
 					System.out.println("-----------------------------------------------------------------");
 					break;
-}
-				}
+                     }
 			}
+		}
 		}
 
 	public static void main(String[] args) {
 		Admin.AdminForUser();
 	}
-
 }
